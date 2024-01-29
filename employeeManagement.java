@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -12,26 +11,25 @@ class employees {
         emp = new ArrayList<>();
     }
 
-    boolean addNewEmployee() throws IOException {
+    boolean addNewEmployee() throws IllegalArgumentException {
         String ID, name, phoneNumber;
 
         try {
             System.out.println("Enter Employeee ID ( 0000-9999 only ): ");
-            ID = sc.nextLine();
+
+            do {
+                ID = sc.nextLine();
+            } while (!isValidId(ID));
+
             System.out.println("Enter Name : ");
             name = sc.nextLine();
+
             System.out.println("Enter phone number (only digits allowed): ");
-            phoneNumber = sc.nextLine();
+            do {
+                phoneNumber = sc.nextLine();
+            } while (isValidPhoneNumber(phoneNumber));
 
-            if (ID.length() != 4 ||
-                    ID.length() == 0 ||
-                    !(containsDigits(ID)) ||
-                    phoneNumber.length() != 10 ||
-                    !(containsDigits(phoneNumber))) {
-                throw new IOException("Invalid Input arguements");
-            }
-
-        } catch (IOException e) {
+        } catch (IllegalArgumentException e) {
             System.out.println(e);
             return false;
         }
@@ -44,20 +42,18 @@ class employees {
 
     boolean changeEmpId(String empIdToBeUpdated, String newEmpId) {
 
-        if (employeeIdExists(newEmpId)) {
-            System.out.println("Employee already exists with similar ID");
-            return false;
-        } else
-            for (List<String> person : emp) {
-                if (person.get(empID).equals(empIdToBeUpdated)) {
-                    person.set(empID, newEmpId);
-                    return true;
-                }
+        for (List<String> person : emp) {
+            if (person.get(empID).equals(empIdToBeUpdated)) {
+                person.set(empID, newEmpId);
+                return true;
             }
+        }
+        System.out.println("Employee not found");
         return false;
     }
 
     boolean changeName(String idToBeUpdated, String newName) {
+
         for (List<String> person : emp) {
             if (person.get(empID).equals(idToBeUpdated)) {
                 person.set(empName, newName);
@@ -69,6 +65,7 @@ class employees {
     }
 
     boolean changePhoneNumber(String idToBeUpdated, String newPhoneNumber) {
+
         for (List<String> person : emp) {
             if (person.get(empID).equals(idToBeUpdated)) {
                 person.set(empPhNumber, newPhoneNumber);
@@ -80,7 +77,7 @@ class employees {
     }
 
     boolean updateEmployee(String idToBeUpdated) {
-        
+
         if (emp.size() == 0) {
             System.out.println("No data to update");
             return false;
@@ -103,10 +100,10 @@ class employees {
         switch (choice) {
             case 1:
                 System.out.println("Enter new Emp ID: ");
-
-                data = sc.nextLine();
+                do {
+                    data = sc.nextLine();
+                } while (isValidId(data));
                 updateStatus = changeEmpId(idToBeUpdated, data);
-
                 break;
             case 2:
                 System.out.println("Enter new Employee name: ");
@@ -114,8 +111,10 @@ class employees {
                 updateStatus = changeName(idToBeUpdated, data);
                 break;
             case 3:
-                System.out.println("Eneter new Employee name: ");
-                data = sc.nextLine();
+                System.out.println("Enter new Employee Phone number: ");
+                do {
+                    data = sc.nextLine();
+                } while (isValidPhoneNumber(data));
                 updateStatus = changePhoneNumber(idToBeUpdated, data);
                 break;
 
@@ -140,6 +139,38 @@ class employees {
             }
         System.out.println("\nEmployee ID doesn\'t exist\n");
         return false;
+    }
+
+    boolean isValidId(String idToCheck) throws IllegalArgumentException {
+        try {
+            if (employeeIdExists(idToCheck))
+                throw new IllegalArgumentException("ID already exists,try using a different ID");
+
+            if (!containsDigits(idToCheck) || idToCheck.length() != 4)
+                throw new IllegalArgumentException("Invalid ID format, please Try again");
+
+        } catch (IllegalArgumentException e) {
+            System.out.println(e);
+
+            return false;
+        }
+        return true;
+
+    }
+
+    boolean isValidPhoneNumber(String numberToCheck) throws IllegalArgumentException {
+        try {
+            if (!containsDigits(numberToCheck) || numberToCheck.length() != 10) {
+                throw new IllegalArgumentException("Invalid phone number,please try again");
+
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println(e);
+
+            return false;
+        }
+        return true;
+
     }
 
     boolean employeeIdExists(String idToSearch) {
@@ -195,7 +226,7 @@ class employees {
 
 public class employeeManagement {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         employees empList = new employees();
         Scanner sc = new Scanner(System.in);
 
