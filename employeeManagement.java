@@ -5,8 +5,6 @@ import java.util.Scanner;
 
 class employees {
     List<List<String>> emp;
-    // assigning column index to names
-    // expand this list to add more fields
     final int empID = 0, empName = 1, empPhNumber = 2;
     Scanner sc = new Scanner(System.in);
 
@@ -82,10 +80,13 @@ class employees {
     }
 
     boolean updateEmployee(String idToBeUpdated) {
-
+        
+        if (emp.size() == 0) {
+            System.out.println("No data to update");
+            return false;
+        }
         String data = "";
         boolean updateStatus = false;
-        // Scanner sc = new Scanner(System.in);
 
         if (!(employeeIdExists(idToBeUpdated))) {
             System.out.println("Employee doesn't exist");
@@ -212,7 +213,6 @@ public class employeeManagement {
             System.out.println("7  EXIT");
             choice = sc.nextInt();
             sc.nextLine();
-            
 
             switch (choice) {
                 case 1:
@@ -221,7 +221,6 @@ public class employeeManagement {
                 case 2:
                     System.out.println("Enter empID to be updated");
 
-                    sc.nextLine();
                     String idToBeUpdated = sc.nextLine();
 
                     empList.updateEmployee(idToBeUpdated);
@@ -229,7 +228,6 @@ public class employeeManagement {
 
                 case 3:
                     System.out.println("Enter Employee ID");
-                    sc.nextLine();
 
                     idToBeUpdated = sc.nextLine();
 
