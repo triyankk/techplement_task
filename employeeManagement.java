@@ -121,6 +121,8 @@ class employees {
 
         // switch case for choice
         switch (choice) {
+
+            // new emp ID
             case 1:
                 System.out.println("Enter new Emp ID: ");
 
@@ -131,11 +133,14 @@ class employees {
                 updateStatus = changeEmpId(idToBeUpdated, data);
                 break;
 
+            // new employee name
             case 2:
                 System.out.println("Enter new Employee name: ");
                 data = sc.nextLine();
                 updateStatus = changeName(idToBeUpdated, data);
                 break;
+
+            // new phone number
             case 3:
                 System.out.println("Enter new Employee Phone number, use underscore \"_\" to leave field empty : ");
 
