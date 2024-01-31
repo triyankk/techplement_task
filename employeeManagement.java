@@ -1,3 +1,11 @@
+/*
+ * made by Triyank Kumar
+ * Employee Management System With CLI
+ * this program is helpful for performing CRUD operations on 
+ * all the available details of employee i.e Employee ID , Employee Name , Phone number
+ * exception handling is done by using dedicated Methods for each of the different input fields
+ */
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
