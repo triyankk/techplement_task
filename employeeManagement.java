@@ -171,8 +171,8 @@ class employees {
 
     // function to delete employee data
     boolean deleteEmployee(String empIdToBeDeleted) {
-        if (isValidId(empIdToBeDeleted))
-            for (List<String> person : emp) {
+        if (employeeIdExists(empIdToBeDeleted))
+            for (List<String> person : emp) {   
                 if (person.get(empID).equals(empIdToBeDeleted)) {
                     emp.remove(person);
                     System.out.println("Employee details Deleted successfully");
